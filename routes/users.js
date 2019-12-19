@@ -52,7 +52,17 @@ router.post("/register", (req, res) => {
     });
   })
 
-
+router.post('/changepass/:token/:u_id' , (req , res)=>{
+    // set a new pass
+        var decoded = jwt.verify(req.params.token, 'LastProject2019')
+        bcrypt.hash(req.body.Password, 10, (err, hash) => {
+            var password = hash
+            var u = (req.params.u_id)
+            User.findByIdAndUpdate(decoded.u , {password:password  }  )
+            .then(user => res.send({msg :`password changed`}))
+            .catch(err => res.send(err))
+        })
+    })
 // router.post("/register", (req, res) => {
 //     const newUser = { ...req.body };
 //     User.findOne({ email: newUser.email })

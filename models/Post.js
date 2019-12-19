@@ -26,7 +26,8 @@ const PostSchema = new Schema({
         postedBy: {
             type: Schema.Types.ObjectId,
             ref: 'User'
-        }
+        },
+        required: false ,
     }],
  User_id:{
           type: Schema.Types.ObjectId,

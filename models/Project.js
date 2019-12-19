@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
-
 //create mongoose schema 
 const Schema = mongoose.Schema
-
 const projectSchema = new Schema({
     title:{
         //validations
@@ -24,7 +22,19 @@ const projectSchema = new Schema({
         enum: ["byHour", "fixed"],
         required: true
     },
+    status:{
+        //validations
+        type: String,
+        enum: ["Accepted", "Pending"],
+        trim: true,
+        default:"Pending"
+    },
     pic:{
+        //validations
+        type: String,
+        trim: true,
+    },
+    client_name:{
         //validations
         type: String,
         trim: true,
@@ -52,8 +62,6 @@ const projectSchema = new Schema({
     ]
     }, 
  {timestamps: true}) //field when it's created and when it's modified
-
 //'User' the name we are using
 const Project = mongoose.model('project', projectSchema)
-
 module.exports = Project

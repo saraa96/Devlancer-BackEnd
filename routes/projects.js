@@ -2,7 +2,6 @@
 const router = require('express').Router()
 // require the model first 
 let Project = require('../models/Project')
-
 //request /Project/
 router.route('/all').get((req,res) =>{
     //list of all the Project in json
@@ -10,7 +9,6 @@ router.route('/all').get((req,res) =>{
     .then(project => res.json(project))
     .catch(err => res.status(400).json('Error: ' + err))
 })
-
 ///Project/add
 router.route('/add').post((req,res) => {
     const title = req.body.title
@@ -20,7 +18,8 @@ router.route('/add').post((req,res) => {
     const pic = req.body.pic
     const tags = req.body.tags
     const client_id =  req.body.client_id
-
+    const client_name = req.body.client_name
+    const status = req.body.status
     const newProject = new Project({
         title,
         description,
@@ -28,7 +27,8 @@ router.route('/add').post((req,res) => {
         type,
         pic,
         tags,
-        client_id
+        client_id,
+        client_name
     })
     //save in data base 
     newProject.save()
@@ -39,7 +39,6 @@ router.route('/add').post((req,res) => {
 //return info about that object
 //pass id by url
 router.route('/:id').get((req,res) => {
-
     Project.findById(req.params.id)
     .then(project => res.json(project))
     .catch(err => res.status(400).json('Error: ' + err))
@@ -61,24 +60,20 @@ router.route('/:id').delete((req,res) => {
 //         project.price_from = Number(req.body.price_from)
 //         project.price_to = Number(req.body.price_to)
 //         project.date = Date.parse(req.body.date)
-
 //         project.save()
 //             .then(() => res.json('Project Updated !'))
 //             .catch(err => res.status(400).json('Error: ' + err))
 //     })
 //     .catch(err => res.status(400).json('Error: ' + err))
 // })
-
 //add a project by client
 router.post("/:id/addfreelancer/:u_id", async (req, res) => {
   console.log("route1111");
   console.log(req.params.id);
   console.log(req.params.u_id);
-  
   Project.findByIdAndUpdate(req.params.id)
   .then(project =>{
     project.freelancer_ids.push(req.params.u_id)
-  
   project.save()
             .then(() => res.json('Project Updated !'))
             .catch(err => res.status(400).json('Error: ' + err))
@@ -91,12 +86,10 @@ router.post("/:id/addfreelancer/:u_id", async (req, res) => {
     //   project.freelancer_ids.push(u_id)
     //   project.save().then(check => {
     //     console.log("ewrwr");
-        
     //     res.send({ project, check })
     //   })
     // })
    })
-
   // router.put("/:id/users/freelancer", async (req, res) => {
   //   // console.log(req.body);
   //   Project.findById(req.params.id).then(project => {
@@ -107,6 +100,4 @@ router.post("/:id/addfreelancer/:u_id", async (req, res) => {
   //     })
   //   })
   // })
-  
-
 module.exports = router

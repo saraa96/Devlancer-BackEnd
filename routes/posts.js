@@ -17,7 +17,7 @@ router.route('/add').post((req,res) => {
     const description = req.body.description
     const tags = req.body.tags
     const comments = req.body.comments
-    const postedBy =req.body.comments.postedBy
+  const postedBy = req.body.postedBy
     const date = Date (req.body.date)
     const User_id =  req.body.User_id
  const User_name =  req.body.User_name
@@ -56,43 +56,14 @@ router.route('/:id').delete((req,res) => {
 router.route('/update/:id').post((req,res) => {
     Post.findById(req.params.id)
     .then(project => {
-        post.title = req.body.title
-        post.description = req.body.description
-        post.tags = Array(req.body.tags)
         post.comments = Array(req.body.comments)
-        post.date = Date.parse(req.body.date)
-        post.User_id = req.body.User_id
- post.User_name = req.body.User_name
+         post.postedBy = req.body.comments.postedBy
 
         post.save()
             .then(() => res.json('Project Updated !'))
             .catch(err => res.status(400).json('Error: ' + err))
-    })
+   })
     .catch(err => res.status(400).json('Error: ' + err))
 })
-
-// //add a project by client
-// router.put("/:id/newsfreelancer", async (req, res) => {
-//     // console.log(req.body);
-//     Project.findById(req.params.id).then(project => {
-//       let user = new User(req.body);
-//       project.freelancer_ids.push(user._id)
-//       project.save().then(check => {
-//         res.send({ project, user, check })
-//       })
-//     })
-//   })
-
-//   router.put("/:id/users/freelancer", async (req, res) => {
-//     // console.log(req.body);
-//     Project.findById(req.params.id).then(project => {
-//       let user = new User(req.body)
-//       project.freelancer_id = user._id;
-//       project.save().then(check => {
-//         res.send({ project, client, check })
-//       })
-//     })
-//   })
-  
 
 module.exports = router
