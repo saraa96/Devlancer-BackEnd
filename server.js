@@ -3,7 +3,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const bodyParser = require("body-parser");
 const passport = require("passport");
-// const configureRoutes = require("./routes")
+const configureRoutes = require("./routes")
 const app = express()
 
 // Bodyparser middleware
@@ -50,7 +50,7 @@ mongoose.connect(
    const CommentRouter = require('./routes/comment')
   app.use('/comment', CommentRouter)
   app.use('/projects', projectsRouter)
-  //app.use('/posts', postsRouter)
+  // app.use('/posts', postsRouter)
   app.use('/users', usersRouter)
   app.use('/posts', PostRouter)
   // app.use('/payment', PayRouter)
